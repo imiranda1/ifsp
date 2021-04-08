@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SampleViews</string>
+    <string-array name="estado_civil">
+        <item>Single</item>
+        <item>Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+    </string-array>
+</resources>
