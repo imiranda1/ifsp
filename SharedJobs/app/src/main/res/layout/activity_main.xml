@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,121 +7,207 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/fullNameEt"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Full Name"
-        android:textSize="20sp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:layout_margin="5dp"
-        android:padding="5dp"/>
-    <EditText
-        android:id="@+id/emailEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Email"
-        android:layout_margin="5dp"
-        android:padding="5dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Genre"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="0dp"/>
-
-    <RadioGroup
-        android:id="@+id/genreRg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
-
-        <RadioButton
-            android:id="@+id/maleRb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male"/>
-
-        <RadioButton
-            android:id="@+id/femaleRb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Female"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/fullNameEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:textSize="20sp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+        <EditText
+            android:id="@+id/emailEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+
+
+
+        <CheckBox
+            android:id="@+id/notificationsCb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Would you like to receive our jobs notifications?"
+            android:hint="CheckBox" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="date" />
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/phoneEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Phone"
+                android:layout_weight="0.7"
+                android:inputType="phone"
+                android:layout_margin="5dp"
+                android:padding="5dp"/>
+            <RadioGroup
+                android:id="@+id/typePhoneRg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+
+                <RadioButton
+                    android:id="@+id/homeRb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Home"/>
+
+                <RadioButton
+                    android:id="@+id/comercialRb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comercial"/>
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genre"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="0dp"/>
+
+        <RadioGroup
+            android:id="@+id/genreRg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <RadioButton
+                android:id="@+id/maleRb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"/>
+
+            <RadioButton
+                android:id="@+id/femaleRb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"/>
         </RadioGroup>
 
-    <EditText
-        android:id="@+id/editTextDate3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:ems="10"
-        android:textSize="20sp"
-        android:hint="Birth date"
-        android:inputType="date"
-        android:padding="5dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Genre"
-        android:layout_margin="5dp"
-        android:layout_marginBottom="0dp"/>
-    <Spinner
-        android:id="@+id/maritalStatusSp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:entries="@array/education"
-        android:padding="5dp" />
-
-    <EditText
-        android:id="@+id/editTextDate2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:textSize="20sp"
-        android:hint="Jobs Titles"
-        android:inputType="date"
-        android:layout_margin="5dp"
-        android:padding="5dp"/>
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/clearBt"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/birthDateEt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="clear"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:textSize="20sp"
+            android:hint="Birth date"
+            android:inputType="date"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Education"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="0dp"/>
+        <Spinner
+            android:id="@+id/educationSp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:entries="@array/education" />
+
+
+        <EditText
+            android:id="@+id/conclusionYearEt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="Conclusion Year"
+            android:inputType="numberDecimal"
+            android:padding="5dp"/>
+        <EditText
+            android:id="@+id/institutionEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="20sp"
+            android:hint="Institution"
+            android:inputType="text"
             android:layout_margin="5dp"
             android:padding="5dp"/>
 
-        <Button
-            android:id="@+id/saveBt"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/monographyTitleEt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="save"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Monography Title"
             android:layout_margin="5dp"
             android:padding="5dp"/>
+        <EditText
+            android:id="@+id/advisorEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Advisor Full Name"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+
+        <EditText
+            android:id="@+id/interestJobsEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="20sp"
+            android:hint="Interest Jobs Titles"
+            android:inputType="date"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/clearBt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="clear"
+                android:layout_margin="5dp"
+                android:padding="5dp"/>
+
+            <Button
+                android:id="@+id/saveBt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="save"
+                android:layout_margin="5dp"
+                android:padding="5dp"/>
 
         </LinearLayout>
-</LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
