@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Shared Jobs</string>
+    <string-array name="education">
+        <item>Elementary School</item>
+        <item>High School</item>
+        <item>Graduation</item>
+        <item>Specialisation</item>
+        <item>Masters</item>
+        <item>PhD</item>
+    </string-array>
+
+</resources>
