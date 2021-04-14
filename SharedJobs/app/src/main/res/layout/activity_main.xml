@@ -177,7 +177,7 @@
             android:ems="10"
             android:textSize="20sp"
             android:hint="Interest Jobs Titles"
-            android:inputType="date"
+            android:inputType="text"
             android:layout_margin="5dp"
             android:padding="5dp"/>
 
@@ -190,6 +190,7 @@
 
             <Button
                 android:id="@+id/clearBt"
+                android:onClick="onClickButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -199,6 +200,7 @@
 
             <Button
                 android:id="@+id/saveBt"
+                android:onClick="onClickButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
