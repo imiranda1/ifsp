@@ -1,5 +1,24 @@
 <resources>
     <string name="app_name">Shared Jobs</string>
+    <string name="home">Home</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="jobs_notifications">Would you like to receive our jobs notifications?</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="phone">Phone</string>
+    <string name="comercial">Comercial</string>
+    <string name="genre">Genre</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="birth_date">Birth date</string>
+    <string name="education">Education</string>
+    <string name="conclusion_year">Conclusion Year</string>
+    <string name="institution">Institution</string>
+    <string name="monography_title">Monography Title</string>
+    <string name="advisor_full_name">Advisor Full Name</string>
+    <string name="interest_jobs_titles">Interest Jobs Titles</string>
+    <string name="clear">clear</string>
+    <string name="save">save</string>
     <string-array name="education">
         <item>Elementary School</item>
         <item>High School</item>

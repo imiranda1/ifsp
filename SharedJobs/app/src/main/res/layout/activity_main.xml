@@ -16,7 +16,7 @@
             android:id="@+id/fullNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
+            android:hint="@string/full_name"
             android:textSize="20sp"
             android:ems="10"
             android:inputType="textEmailAddress"
@@ -29,7 +29,7 @@
             android:textSize="20sp"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:hint="Email"
+            android:hint="@string/email"
             android:layout_margin="5dp"
             android:padding="5dp"/>
 
@@ -39,8 +39,8 @@
             android:id="@+id/notificationsCb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Would you like to receive our jobs notifications?"
-            android:hint="CheckBox" />
+            android:text="@string/jobs_notifications"
+            android:hint="@string/checkbox" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Phone"
+                android:hint="@string/phone"
                 android:layout_weight="0.7"
                 android:inputType="phone"
                 android:layout_margin="5dp"
@@ -67,13 +67,13 @@
                     android:id="@+id/homeRb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Home"/>
+                    android:text="@string/home"/>
 
                 <RadioButton
                     android:id="@+id/comercialRb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Comercial"/>
+                    android:text="@string/comercial"/>
 
             </RadioGroup>
         </LinearLayout>
@@ -81,7 +81,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Genre"
+            android:text="@string/genre"
             android:layout_margin="5dp"
             android:layout_marginBottom="0dp"/>
 
@@ -96,13 +96,13 @@
                 android:id="@+id/maleRb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male"/>
+                android:text="@string/male"/>
 
             <RadioButton
                 android:id="@+id/femaleRb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female"/>
+                android:text="@string/female"/>
         </RadioGroup>
 
         <EditText
@@ -112,14 +112,14 @@
             android:layout_margin="5dp"
             android:ems="10"
             android:textSize="20sp"
-            android:hint="Birth date"
+            android:hint="@string/birth_date"
             android:inputType="date"
             android:padding="5dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Education"
+            android:text="@string/education"
             android:layout_margin="5dp"
             android:layout_marginBottom="0dp"/>
         <Spinner
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:ems="10"
-            android:hint="Conclusion Year"
+            android:hint="@string/conclusion_year"
             android:inputType="numberDecimal"
             android:padding="5dp"/>
         <EditText
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:textSize="20sp"
-            android:hint="Institution"
+            android:hint="@string/institution"
             android:inputType="text"
             android:layout_margin="5dp"
             android:padding="5dp"/>
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:hint="Monography Title"
+            android:hint="@string/monography_title"
             android:layout_margin="5dp"
             android:padding="5dp"/>
         <EditText
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:hint="Advisor Full Name"
+            android:hint="@string/advisor_full_name"
             android:layout_margin="5dp"
             android:padding="5dp"/>
 
@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:textSize="20sp"
-            android:hint="Interest Jobs Titles"
+            android:hint="@string/interest_jobs_titles"
             android:inputType="text"
             android:layout_margin="5dp"
             android:padding="5dp"/>
@@ -194,7 +194,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="clear"
+                android:text="@string/clear"
                 android:layout_margin="5dp"
                 android:padding="5dp"/>
 
@@ -204,7 +204,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="save"
+                android:text="@string/save"
                 android:layout_margin="5dp"
                 android:padding="5dp"/>
 
