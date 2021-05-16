@@ -4,41 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
-import br.com.imiranda.contato.databinding.ActivityMainBinding;
+import br.com.imiranda.contato.databinding.ActivityContatoBinding;
 
-public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding activityMainBinding;
+public class ContatoActivity extends AppCompatActivity {
+    private ActivityContatoBinding activityContatoBinding;
     private Contato contato;
     private final int PERMISSAO_LIGACAO_REQUEST_CODE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        activityContatoBinding = activityContatoBinding.inflate(getLayoutInflater());
+        setContentView(activityContatoBinding.getRoot());
     }
 
     public void onClick(View view){
         contato = new Contato(
-                activityMainBinding.nomeEt.getText().toString(),
-                activityMainBinding.emailEt.getText().toString(),
-                activityMainBinding.telefoneEt.getText().toString(),
-                activityMainBinding.telefoneComercialSw.isChecked(),
-                activityMainBinding.telefoneCelularEt.getText().toString(),
-                activityMainBinding.siteEt.getText().toString()
+                activityContatoBinding.nomeEt.getText().toString(),
+                activityContatoBinding.emailEt.getText().toString(),
+                activityContatoBinding.telefoneEt.getText().toString(),
+                activityContatoBinding.telefoneComercialSw.isChecked(),
+                activityContatoBinding.telefoneCelularEt.getText().toString(),
+                activityContatoBinding.siteEt.getText().toString()
         );
 
         switch (view.getId()){
             case R.id.salvarBt:
+                Intent retornoIntent = new Intent();
+                retornoIntent.putExtra(Intent.EXTRA_USER, contato);
+                setResult(RESULT_OK, retornoIntent);
+                finish();
                 break;
             case R.id.enviarEmailBt:
                 Intent enviarEmailIntent = new Intent (Intent.ACTION_SENDTO);
