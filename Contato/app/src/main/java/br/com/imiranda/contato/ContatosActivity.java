@@ -4,11 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,8 +25,11 @@ import br.com.imiranda.contato.databinding.ActivityContatosBinding;
 public class ContatosActivity extends AppCompatActivity {
     private ActivityContatosBinding activityContatosBinding;
     private ArrayList<Contato> contatosList;
-    private ArrayAdapter<String> contatosAdapter;
+    private ContatosAdapter contatosAdapter;
     private final int NOVO_CONTATO_REQUEST_CODE = 0;
+    private final int EDITAR_CONTATO_REQUEST_CODE = 1;
+    private final int PERMISSAO_LIGACAO_REQUEST_CODE = 0;
+    private Contato contato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +38,36 @@ public class ContatosActivity extends AppCompatActivity {
         setContentView(activityContatosBinding.getRoot());
         //Instanciar DataSource
         contatosList = new ArrayList<>();
+//asda
         popularContatosList();
-
         //Instanciar DataSource
-        contatosAdapter = new ArrayAdapter(
+        contatosAdapter = new ContatosAdapter(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.view_contato,
                 contatosList);
 
         //Associando o adapter ao ListView
         activityContatosBinding.contatosLv.setAdapter(contatosAdapter);
+
+        //registrandi listview para menu de contexto
+        registerForContextMenu(activityContatosBinding.contatosLv);
+
+        //assocair um lister de click para detalhes
+        activityContatosBinding.contatosLv.setOnItemClickListener((parent, view, position, id) -> {
+            contato = contatosList.get(position);
+            Intent detalhesIntent = new Intent(this, ContatoActivity.class);
+            detalhesIntent.putExtra(Intent.EXTRA_USER,contato);
+            startActivity(detalhesIntent);
+        });
     }
 
-    private void popularContatosList(){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterForContextMenu(activityContatosBinding.contatosLv);
+
+    }
+        private void popularContatosList(){
         for (int i = 0; i < 20; i++){
             contatosList.add(
                     new Contato(
@@ -74,12 +102,90 @@ public class ContatosActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == NOVO_CONTATO_REQUEST_CODE && requestCode == RESULT_OK){
+        if(requestCode == NOVO_CONTATO_REQUEST_CODE && resultCode == RESULT_OK){
             Contato contato = (Contato) data.getSerializableExtra(Intent.EXTRA_USER);
             if(contato != null){
                 contatosList.add(contato);
                 contatosAdapter.notifyDataSetChanged();
             }
+        }else{
+            if(requestCode == EDITAR_CONTATO_REQUEST_CODE && resultCode == RESULT_OK){
+                //atualizar o contato;
+                Contato contato = (Contato) data.getSerializableExtra(Intent.EXTRA_USER);
+                int posicao = data.getIntExtra(Intent.EXTRA_INDEX,-1);
+                if(contato != null && posicao != -1){
+                    contatosList.remove(posicao);
+                    contatosList.add(posicao,contato);
+                    contatosAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.context_menu_contato, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        contato = contatosAdapter.getItem(menuInfo.position);
+        switch (item.getItemId()){
+            case R.id.enviarEmailMi:
+                Intent enviarEmailIntent = new Intent (Intent.ACTION_SENDTO);
+                enviarEmailIntent.setData(Uri.parse("mailto:"));
+                enviarEmailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{contato.getEmail()});
+                enviarEmailIntent.putExtra(Intent.EXTRA_SUBJECT,contato.getNome());
+                enviarEmailIntent.putExtra(Intent.EXTRA_TEXT, contato.toString());
+                startActivity(enviarEmailIntent);
+                return true;
+            case R.id.ligarMi:
+                verifyCallPhonePermissionAndCall();
+                return true;
+            case R.id.acessarSiteMi:
+                Intent acessarSiteIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(contato.getSite()));
+                startActivity(acessarSiteIntent);
+                return true;
+            case R.id.detalhesContatoMi:
+                //ex
+                return true;
+            case R.id.editarContatoMi:
+                Intent editarContatoIntent = new Intent(this, ContatoActivity.class);
+                editarContatoIntent.putExtra(Intent.EXTRA_USER, contato);
+                editarContatoIntent.putExtra(Intent.EXTRA_INDEX, menuInfo.position);
+                startActivityForResult(editarContatoIntent,EDITAR_CONTATO_REQUEST_CODE);
+                return true;
+            case R.id.removerContatoMi:
+                return true;
+            default:
+                return false;
+
         }
     }
+    private void verifyCallPhonePermissionAndCall(){
+        Intent ligarIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + contato.getTelefone()));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CALL_PHONE},PERMISSAO_LIGACAO_REQUEST_CODE);
+            } else {
+                startActivity(ligarIntent);
+            }
+        }
+        else{
+            //a permissão já foi solicitada, android < M
+            startActivity(ligarIntent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==PERMISSAO_LIGACAO_REQUEST_CODE){
+            verifyCallPhonePermissionAndCall();
+        }
+    }
+
+    
 }

@@ -6,23 +6,62 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import br.com.imiranda.contato.databinding.ActivityContatoBinding;
 
 public class ContatoActivity extends AppCompatActivity {
+    private static final int PERMISSAO_ESCRITA_ARMAZENAMENTO_EXTERNO = 0;
     private ActivityContatoBinding activityContatoBinding;
     private Contato contato;
-    private final int PERMISSAO_LIGACAO_REQUEST_CODE = 0;
+    private int posicao = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityContatoBinding = activityContatoBinding.inflate(getLayoutInflater());
         setContentView(activityContatoBinding.getRoot());
+        //Verificar se algum contato foi receido
+        contato = (Contato) getIntent().getSerializableExtra(Intent.EXTRA_USER);
+        if (contato != null){
+            posicao = getIntent().getIntExtra(Intent.EXTRA_INDEX,-1);
+            boolean ativo = (posicao != -1)?true:false;
+            alterarAtivacaoViews(ativo);
+
+            if (ativo){
+                getSupportActionBar().setTitle("Edição Contato");
+
+            }else{
+                getSupportActionBar().setTitle("Detalhes Contato");
+            }
+            //usando dados do contato para preencher a view
+            activityContatoBinding.nomeEt.setText(contato.getNome());
+            activityContatoBinding.emailEt.setText(contato.getEmail());
+            activityContatoBinding.telefoneEt.setText(contato.getTelefone());
+            activityContatoBinding.telefoneComercialSw.setChecked(contato.isTelefoneComercial());
+            activityContatoBinding.telefoneCelularEt.setText(contato.getTelefoneCelular());
+            activityContatoBinding.siteEt.setText(contato.getEmail());
+        }else{
+            getSupportActionBar().setTitle("Novo Contato");
+        }
+    }
+    private void alterarAtivacaoViews(boolean ativo){
+        activityContatoBinding.nomeEt.setEnabled(ativo);
+        activityContatoBinding.emailEt.setEnabled(ativo);
+        activityContatoBinding.telefoneEt.setEnabled(ativo);
+        activityContatoBinding.telefoneComercialSw.setEnabled(ativo);
+        activityContatoBinding.telefoneCelularEt.setEnabled(ativo);
+        activityContatoBinding.siteEt.setEnabled(ativo);
     }
 
     public void onClick(View view){
@@ -39,51 +78,63 @@ public class ContatoActivity extends AppCompatActivity {
             case R.id.salvarBt:
                 Intent retornoIntent = new Intent();
                 retornoIntent.putExtra(Intent.EXTRA_USER, contato);
+                retornoIntent.putExtra(Intent.EXTRA_INDEX, posicao);
                 setResult(RESULT_OK, retornoIntent);
                 finish();
                 break;
-            case R.id.enviarEmailBt:
-                Intent enviarEmailIntent = new Intent (Intent.ACTION_SENDTO);
-                enviarEmailIntent.setData(Uri.parse("mailto"));
-                enviarEmailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{contato.getEmail()});
-                enviarEmailIntent.putExtra(Intent.EXTRA_SUBJECT,"Contato");
-                enviarEmailIntent.putExtra(Intent.EXTRA_TEXT, contato.toString());
-                startActivity(enviarEmailIntent);
-                break;
-            case R.id.chamarTelefoneBt:
-                verifyCallPhonePermissionAndCall();
-                break;
-            case R.id.acessarSiteBt:
-                Intent acessarSiteIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(contato.getSite()));
-                startActivity(acessarSiteIntent);
-                break;
             case R.id.gerarPdfBt:
+                gerarDocumentPdf();
                 break;
             default:
                 break;
         }
     }
-    private void verifyCallPhonePermissionAndCall(){
-        Intent ligarIntent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + contato.getTelefone()));
+
+    private void verifyPermissaoEscritaAmarzanamentoExterno(){
+        Intent ligarIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contato.getTelefone()));
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CALL_PHONE},PERMISSAO_LIGACAO_REQUEST_CODE);
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSAO_ESCRITA_ARMAZENAMENTO_EXTERNO);
             } else {
-                startActivity(ligarIntent);
+               verifyPermissaoEscritaAmarzanamentoExterno();
             }
         }
         else{
-            //a permissão já foi solicitada, android < M
-            startActivity(ligarIntent);
+            gerarDocumentPdf();
+        }
+    }
+
+    private void gerarDocumentPdf() {
+        //pegar a altura e largura da view raiz para gerar iamgem do pdf
+        View conteudo = activityContatoBinding.getRoot();
+        int largura = conteudo.getWidth();
+        int altura = conteudo.getHeight();
+        PdfDocument document = new PdfDocument();
+
+        //criar configura de uma pagina e iniciando uma pagina a partir da configuracao
+        PdfDocument.PageInfo configuracaoPagina = new PdfDocument.PageInfo.Builder(largura, altura,1).create();
+        PdfDocument.Page pagina = document.startPage(configuracaoPagina);
+        //criando snapshot da view no pagina pdf
+        conteudo.draw(pagina.getCanvas());
+        document.finishPage(pagina);
+
+        File diretorioDocumentos = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+
+        try {
+            File documento = new File (diretorioDocumentos, contato.getNome().replace(" ","_")+ ".pdf");
+            documento.createNewFile();
+            document.writeTo(new FileOutputStream(documento));
+            document.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==PERMISSAO_LIGACAO_REQUEST_CODE){
-            verifyCallPhonePermissionAndCall();
+        if(requestCode == PERMISSAO_ESCRITA_ARMAZENAMENTO_EXTERNO){
+            verifyPermissaoEscritaAmarzanamentoExterno();
         }
     }
-
 }
