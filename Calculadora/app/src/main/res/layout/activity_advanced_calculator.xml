@@ -6,24 +6,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/gray"
-    tools:context=".MainActivity">
+    tools:context=".BasicCalculatorActivity"
+    android:gravity="center">>
 
     <TextView
         android:id="@+id/txtExpression"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:text="10+10"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="40sp"
         android:gravity="end"
         android:layout_marginEnd="10dp"
         android:ellipsize="start"
         android:singleLine="true"
         />
+
+
     <TextView
         android:id="@+id/txtResult"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:text="10"
         android:textColor="@color/black"
         android:textSize="60sp"
@@ -31,21 +34,54 @@
         android:layout_marginEnd="10dp"
         android:ellipsize="start"
         android:maxLines="1"
+
         />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/btBackspace"
+            style="@style/Numbers_Button"
+            android:layout_width="36dp"
+            android:layout_height="43dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/backspace"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="1"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btClear"
-            style="@style/Numbers_Button"
-            android:layout_weight="3"
-            android:text="C"/>
-        <Button
-            android:id="@+id/btDiv"
             style="@style/Operators_Button"
-            android:text="÷"/>
+            android:layout_weight="1"
+            android:text="C"/>
+
+        <Button
+            android:id="@+id/btPow"
+            style="@style/Operators_Button"
+            android:layout_weight="1"
+
+            android:text="^"/>
+        <Button
+            android:id="@+id/btSqrt"
+            style="@style/Operators_Button"
+            android:layout_weight="1"
+            android:text="√"/>
+        <Button
+            android:id="@+id/btPercent"
+            style="@style/Operators_Button"
+            android:textAllCaps="false"
+            android:text="%"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,9 +101,9 @@
             style="@style/Numbers_Button"
             android:text="9"/>
         <Button
-            android:id="@+id/btMult"
+            android:id="@+id/btDiv"
             style="@style/Operators_Button"
-            android:text="X"/>
+            android:text="÷"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,9 +123,10 @@
             style="@style/Numbers_Button"
             android:text="6"/>
         <Button
-            android:id="@+id/btSub"
+            android:id="@+id/btMult"
             style="@style/Operators_Button"
-            android:text="-"/>
+            android:textAllCaps="false"
+            android:text="x"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,9 +146,10 @@
             style="@style/Numbers_Button"
             android:text="3"/>
         <Button
-            android:id="@+id/btSum"
+            android:id="@+id/btSub"
             style="@style/Operators_Button"
-            android:text="+"/>
+            android:text="-"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,14 +166,14 @@
             style="@style/Numbers_Button"
             android:text=","/>
 
-        <ImageView
-            android:id="@+id/btBackspace"
-            style="@style/Numbers_Button"
-            android:src="@drawable/backspace"/>
         <Button
             android:id="@+id/btEqual"
             style="@style/Operators_Button"
             android:text="="/>
+        <Button
+            android:id="@+id/btSum"
+            style="@style/Operators_Button"
+            android:text="+"/>
     </LinearLayout>
 
 

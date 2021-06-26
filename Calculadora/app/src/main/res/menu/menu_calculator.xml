@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/chooseCalculatorType">
+        <item
+            android:id="@+id/basicCalculatorMi"
+            android:title="@string/basic_calculator" />
+        <item
+            android:id="@+id/advancedCalculatorMi"
+            android:title="@string/advanced_calculator" />
+    </group>
+</menu>
