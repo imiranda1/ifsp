@@ -27,10 +27,11 @@ public class AdvancedCalculatorActivity extends AppCompatActivity implements Vie
         setContentView(activityAdvancedCalculatorBinding.getRoot());
     }
 
-    @Override
+
+
+
     public void onClick(View view) {
         switch(view.getId()) {
-
             case R.id.btZero:
                 buildExpression("0", true);
                 break;
@@ -43,7 +44,6 @@ public class AdvancedCalculatorActivity extends AppCompatActivity implements Vie
             case R.id.btThree:
                 buildExpression("3", true);
                 break;
-
             case R.id.btFour:
                 buildExpression("4", true);
                 break;
@@ -63,7 +63,7 @@ public class AdvancedCalculatorActivity extends AppCompatActivity implements Vie
                 buildExpression("9", true);
                 break;
             case R.id.btComma:
-                buildExpression(",", true);
+                buildExpression(".", true);
                 break;
             case R.id.btMult:
                 buildExpression("*", false);
@@ -76,6 +76,15 @@ public class AdvancedCalculatorActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.btSub:
                 buildExpression("-", false);
+                break;
+            case R.id.btPercent:
+                buildExpression("/100", false);
+                break;
+            case R.id.btSqrt:
+                buildExpression("sqrt", false);
+                break;
+            case R.id.btPow:
+                buildExpression("^", false);
                 break;
             case R.id.btClear:
                 activityAdvancedCalculatorBinding.txtExpression.setText("");
@@ -92,38 +101,29 @@ public class AdvancedCalculatorActivity extends AppCompatActivity implements Vie
                 activityAdvancedCalculatorBinding.txtResult.setText(" ");
                 break;
             case R.id.btEqual:
+                long lResult;
                 try{
-
                     Expression expression = new ExpressionBuilder(activityAdvancedCalculatorBinding.txtExpression.getText().toString()).build();
                     double result = expression.evaluate();
-                    long lResult = (long) result;
+                    lResult = (long) result;
+
+                    activityAdvancedCalculatorBinding.txtExpression.setText(toString());
                     if (result == (double) lResult) {
                         activityAdvancedCalculatorBinding.txtResult.setText((CharSequence) String.valueOf(lResult));
+                        activityAdvancedCalculatorBinding.txtExpression.setText("");
 
                     }else{
                         activityAdvancedCalculatorBinding.txtResult.setText((CharSequence) String.valueOf(result));
+                        activityAdvancedCalculatorBinding.txtExpression.setText("");
 
                     }
-
                 }catch (Exception e){
 
                 }
-            case R.id.btPercent:
-                buildExpression("%", false);
-                break;
-            case R.id.btSqrt:
-                buildExpression("sqrt", false);
-                break;
-            case R.id.btPow:
-                buildExpression("exp", false);
-                break;
 
-
+                break;
 
         }
-
-
-
     }
 
     public void buildExpression(String string, boolean cleardata){
