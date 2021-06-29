@@ -27,7 +27,7 @@
         android:id="@+id/numeroFacesTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Entre com  o número de dados"
+        android:text="Entre com  o número de faces"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/numeroDadosSp"
