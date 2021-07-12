@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/novaTaskMi"
+        android:title="Nova Task"
+        android:icon="@drawable/ic_nova_task"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/sairMi"
+        android:title="Sair"
+        android:icon="@drawable/ic_sair"
+        app:showAsAction="ifRoom"/>
+</menu>

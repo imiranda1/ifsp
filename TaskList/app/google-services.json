@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "489791830079",
+    "project_id": "tasklist-b72b4",
+    "storage_bucket": "tasklist-b72b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489791830079:android:6fe070e66cbda86de8608a",
+        "android_client_info": {
+          "package_name": "br.com.imiranda.tasklist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489791830079-9n60oip3s079e60g6kfjmeavi1crtvfi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.imiranda.tasklist",
+            "certificate_hash": "064c315a5fc791b0063584e23acc6569cc098220"
+          }
+        },
+        {
+          "client_id": "489791830079-l1eqopkuoaibmacqqhb9re23b06kaom1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC-igxG2wpWIkM5vlcI1q_LkqLeuYlRvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489791830079-l1eqopkuoaibmacqqhb9re23b06kaom1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
