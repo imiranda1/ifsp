@@ -29,17 +29,24 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
     private lateinit var taskController: TaskController
     private lateinit var novaTaskLauncher: ActivityResultLauncher<Intent>
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
         taskController = TaskController(this)
-
-        var task: Task = Task("1","2","3","4","5","6")
-        taskList.add(task)
-
+        taskList = mutableListOf()
+      for (i in 1..50){
+            taskList.add(
+                Task(
+                "Nome $i",
+                "Email $i",
+                "Telefone $i",
+                "Celular $i",
+                "Site $i",
+                    "b"
+            ))
+       }
 
 
         taskLayoutManager = LinearLayoutManager(this)
