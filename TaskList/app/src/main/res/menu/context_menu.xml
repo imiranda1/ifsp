@@ -8,7 +8,7 @@
             android:id="@+id/editarMi"
             android:title="Editar"/>
         <item
-            android:id="@+id/ligarMi"
+            android:id="@+id/removerMi"
             android:title="Remover"/>
     </group>
 

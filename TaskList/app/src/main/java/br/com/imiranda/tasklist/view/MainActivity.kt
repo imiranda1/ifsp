@@ -2,8 +2,10 @@ package br.com.imiranda.tasklist.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 
 import androidx.activity.result.ActivityResultLauncher
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
     private lateinit var taskLayoutManager: LinearLayoutManager
     private lateinit var taskController: TaskController
     private lateinit var novaTaskLauncher: ActivityResultLauncher<Intent>
+    private lateinit var task: Task
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,7 +52,7 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
 
 
         taskLayoutManager = LinearLayoutManager(this)
-        taskAdapter = TaskAdapter(taskList,this)
+        taskAdapter = TaskAdapter(taskList,this,menuInflater)
         activityMainBinding.tasksRv.adapter= taskAdapter
         activityMainBinding.tasksRv.layoutManager = taskLayoutManager
 
@@ -108,5 +111,34 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
             false
         }
     }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menuInflater.inflate(R.menu.context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        task = taskList.get(taskAdapter.getPosicao())
+        val posicao: Int = taskAdapter.getPosicao()
+
+        when(item.itemId){
+            R.id.concluirMi -> {
+                Toast.makeText(this, "CONCLUINDO" +task.titulo, Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.removerMi -> {
+                Toast.makeText(this, "REMOVENDO" +task.titulo, Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.editarMi -> {
+                Toast.makeText(this, "EDITANDO" +task.titulo, Toast.LENGTH_SHORT).show()
+                return true
+            }
+
+
+        }
+        return false
+    }
+
+
 
 }
