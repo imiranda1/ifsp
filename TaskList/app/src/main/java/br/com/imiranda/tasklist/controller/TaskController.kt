@@ -7,6 +7,7 @@ import br.com.imiranda.tasklist.view.MainActivity
 
 class TaskController(mainActivity: MainActivity) {
 
+
     val taskDao: TaskDAO
     init{
         taskDao = TaskFirebase()

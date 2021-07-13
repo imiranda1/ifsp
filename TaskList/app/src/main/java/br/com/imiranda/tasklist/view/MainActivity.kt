@@ -1,14 +1,13 @@
 package br.com.imiranda.tasklist.view
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.imiranda.tasklist.AutenticacaoFirebase
@@ -18,8 +17,7 @@ import br.com.imiranda.tasklist.adpter.TaskAdapter
 import br.com.imiranda.tasklist.controller.TaskController
 import br.com.imiranda.tasklist.databinding.ActivityMainBinding
 import br.com.imiranda.tasklist.model.Task
-import java.time.LocalDate
-import java.time.LocalDateTime
+
 
 class MainActivity : AppCompatActivity(),OnTaskClickListener{
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -36,17 +34,18 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
         setContentView(activityMainBinding.root)
         taskController = TaskController(this)
         taskList = mutableListOf()
-      for (i in 1..50){
-            taskList.add(
-                Task(
-                "Nome $i",
-                "Email $i",
-                "Telefone $i",
-                "Celular $i",
-                "Site $i",
-                    "b"
-            ))
-       }
+        taskList = taskController.buscaTasks()
+//      for (i in 1..5){
+//            taskList.add(
+//                Task(
+//                "Nome $i",
+//                "Email $i",
+//                "Telefone $i",
+//                "Celular $i",
+//                "Site $i",
+//                    "b"
+//            ))
+//       }
 
 
         taskLayoutManager = LinearLayoutManager(this)
@@ -57,14 +56,14 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
         //registrando um activity call back para resiltado de uma activity
         //activityresultContract
         novaTaskLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activitResult ->
-            if( activitResult.resultCode == AppCompatActivity.RESULT_OK){
+            if( activitResult.resultCode == RESULT_OK){
                 val task :Task? = activitResult.data?.getParcelableExtra<Task>(Intent.EXTRA_USER)
                 if (task != null){
                     taskList.add(task)
                     taskAdapter.notifyDataSetChanged()
 
                     //inserindo task no banco
-                    taskController.insereTask(task)
+                   taskController.insereTask(task)
                 }
             }
         }
