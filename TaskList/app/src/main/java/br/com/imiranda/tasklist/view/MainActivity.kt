@@ -2,7 +2,10 @@ package br.com.imiranda.tasklist.view
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
@@ -23,7 +26,7 @@ import br.com.imiranda.tasklist.model.Task
 
 class MainActivity : AppCompatActivity(),OnTaskClickListener{
     private lateinit var activityMainBinding: ActivityMainBinding
-    private lateinit var taskList: MutableList<Task>
+    lateinit var taskList: MutableList<Task>
     private lateinit var taskAdapter: TaskAdapter
     private lateinit var taskLayoutManager: LinearLayoutManager
     private lateinit var taskController: TaskController
@@ -38,19 +41,8 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
         setContentView(activityMainBinding.root)
         taskController = TaskController(this)
         taskList = mutableListOf()
-        taskList = taskController.buscaTasks()
-//      for (i in 1..5){
-//            taskList.add(
-//                Task(
-//                "Nome $i",
-//                "Email $i",
-//                "Telefone $i",
-//                "Celular $i",
-//                "Site $i",
-//                    "b"
-//            ))
-//       }
 
+        taskList = taskController.buscaTasks()
 
         taskLayoutManager = LinearLayoutManager(this)
         taskAdapter = TaskAdapter(taskList,this,menuInflater)
@@ -63,8 +55,7 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
             if( activitResult.resultCode == RESULT_OK){
                 val task :Task? = activitResult.data?.getParcelableExtra<Task>(Intent.EXTRA_USER)
                 if (task != null){
-                    taskList.add(task)
-                    taskAdapter.notifyDataSetChanged()
+                    atualizaTaskList(task)
 
                     //inserindo task no banco
                    taskController.insereTask(task)
@@ -86,10 +77,29 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
         }
     }
 
+    fun atualizaTaskList(task: Task) {
+        if(task.titulo.isNotEmpty()){
+            taskList.add(task)
+            taskAdapter.notifyDataSetChanged()
+        }
+    }
+
+
+    fun atualizaAdapter() = taskAdapter.notifyDataSetChanged()
+
+
+    override fun onResume() {
+        super.onResume()
+        taskList = taskController.buscaTasks()
+        taskAdapter.notifyDataSetChanged()
+    }
+
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //    }
+
+
 
     override fun onStart() {
         super.onStart()

@@ -31,9 +31,7 @@ class EditTaskActivity : AppCompatActivity() {
 
     }
 
-    private fun setDisableFields(){
 
-    }
 
     fun onClick(view: View) {
         if(activityTaskEditBinding.descricaoEt.text.toString() != ""){

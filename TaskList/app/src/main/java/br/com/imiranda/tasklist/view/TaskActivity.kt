@@ -33,9 +33,6 @@ class TaskActivity : AppCompatActivity() {
             )
         }
 
-
-
-
         if(view == activityTaskBinding.salvarBt){
             val retornoIntent = Intent()
             retornoIntent.putExtra(Intent.EXTRA_USER, task)

@@ -47,7 +47,7 @@ class AutenticacaoActivity : AppCompatActivity() {
         //se ja autenticaram com a conta google e a conta permanece
         if(AutenticacaoFirebase.googleSignInAccount != null){
             Toast.makeText(this, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, TaskActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 

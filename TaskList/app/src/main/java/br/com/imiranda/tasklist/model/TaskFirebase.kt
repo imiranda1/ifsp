@@ -1,6 +1,7 @@
 package br.com.imiranda.tasklist.model
 
 import br.com.imiranda.tasklist.model.TaskFirebase.Constantes.LISTA_TAREFAS_DATABASE
+import br.com.imiranda.tasklist.view.MainActivity
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -9,7 +10,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
-class TaskFirebase:TaskDAO {
+class TaskFirebase(mainActivity: MainActivity):TaskDAO {
     object Constantes {
         val LISTA_TAREFAS_DATABASE = "listaTarefas"
     }
@@ -24,6 +25,8 @@ class TaskFirebase:TaskDAO {
                 val newTask: Task = snapshot.getValue<Task>()?:Task()
                 if (taskList.indexOfFirst { it.titulo.equals(newTask.titulo) } == -1){
                     taskList.add(newTask)
+                    mainActivity.atualizaAdapter()
+
                 }
             }
 
@@ -50,8 +53,15 @@ class TaskFirebase:TaskDAO {
         })
         tarefasListDB.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var contato:Task =  snapshot.getValue<Task>()?:Task()
-                taskList.add(contato)
+                snapshot.getValue<HashMap<String,Task>>()?.values?.forEach{ task ->
+                    if (taskList.indexOfFirst { it.titulo.equals(task.titulo) } == -1) {
+                        taskList.add(task)
+
+                        mainActivity.atualizaAdapter()
+                    }
+                }
+
+
             }
 
             override fun onCancelled(error: DatabaseError) {

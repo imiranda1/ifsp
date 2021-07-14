@@ -10,7 +10,7 @@ class TaskController(mainActivity: MainActivity) {
 
     val taskDao: TaskDAO
     init{
-        taskDao = TaskFirebase()
+        taskDao = TaskFirebase(mainActivity)
     }
 
     fun insereTask(task: Task) = taskDao.createTask(task)
