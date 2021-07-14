@@ -20,7 +20,6 @@ class TaskActivity : AppCompatActivity() {
         setContentView(activityTaskBinding.root)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun onClick(view: View){
         val task: Task
         with(activityTaskBinding){
@@ -33,6 +32,9 @@ class TaskActivity : AppCompatActivity() {
                 ""
             )
         }
+
+
+
 
         if(view == activityTaskBinding.salvarBt){
             val retornoIntent = Intent()

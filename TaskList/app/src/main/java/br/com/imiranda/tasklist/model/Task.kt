@@ -8,8 +8,8 @@ data class Task(
     val titulo: String = "",
     var descricao: String = "",
     val dataCriacao: String = "",
-    val dataPrevistaExecucao: String = "",
+    var dataPrevistaExecucao: String = "",
     val usuarioCriador: String = "",
-    val usuarioExecutor: String = ""
+    var usuarioExecutor: String = ""
 
 ): Parcelable

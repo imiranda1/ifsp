@@ -1,13 +1,13 @@
 package br.com.imiranda.tasklist.view
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
     private lateinit var taskLayoutManager: LinearLayoutManager
     private lateinit var taskController: TaskController
     private lateinit var novaTaskLauncher: ActivityResultLauncher<Intent>
+    private lateinit var editTaskLauncher: ActivityResultLauncher<Intent>
     private lateinit var task: Task
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +68,19 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
 
                     //inserindo task no banco
                    taskController.insereTask(task)
+                }
+            }
+        }
+
+        editTaskLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ activitResult ->
+            if( activitResult.resultCode == RESULT_OK){
+                val task :Task? = activitResult.data?.getParcelableExtra<Task>(Intent.EXTRA_USER)
+                if (task != null){
+                    taskAdapter.getPosicao()
+                    taskList.set(taskAdapter.getPosicao(), task)
+                    taskAdapter.notifyDataSetChanged()
+                    taskController.atualizaTask(task)
+
                 }
             }
         }
@@ -122,15 +136,47 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
 
         when(item.itemId){
             R.id.concluirMi -> {
-                Toast.makeText(this, "CONCLUINDO" +task.titulo, Toast.LENGTH_SHORT).show()
-                return true
+                if(task.usuarioExecutor.equals("")){
+                    task.usuarioExecutor = AutenticacaoFirebase.firebaseAuth.currentUser?.email.toString()
+                    taskAdapter.notifyDataSetChanged()
+                    taskController.atualizaTask(task)
+                    Toast.makeText(this, "TASK CONCLUIDA " +task.titulo, Toast.LENGTH_SHORT).show()
+                    return true
+                }else{
+                    Toast.makeText(this, "A ${task.titulo} já se encontra concluída", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+
             }
             R.id.removerMi -> {
-                Toast.makeText(this, "REMOVENDO" +task.titulo, Toast.LENGTH_SHORT).show()
-                return true
+
+                if(task.usuarioExecutor.equals("")){
+                    Toast.makeText(this, "TASK REMOVIDA", Toast.LENGTH_SHORT).show()
+                    taskList.remove(task)
+                    taskAdapter.notifyDataSetChanged()
+
+                    taskController.removeTask(task.titulo)
+                    return true
+                }else{
+                    Toast.makeText(this, "Task concluída não pode ser removida" +task.titulo, Toast.LENGTH_SHORT).show()
+                    return true
+                }
+
+
             }
             R.id.editarMi -> {
-                Toast.makeText(this, "EDITANDO" +task.titulo, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "EDITANDO" +task.titulo, Toast.LENGTH_SHORT).show()
+
+
+                val editarContatoIntent = Intent(this, EditTaskActivity::class.java)
+//                editarContatoIntent.putExtra(Intent.EXTRA_USER, task)
+//                editarContatoIntent.putExtra(Intent.EXTRA_INDEX, taskAdapter.getPosicao())
+//                startActivityForResult(editarContatoIntent, -1)
+
+
+                val editTaskIntent = Intent(this, EditTaskActivity::class.java)
+                editTaskIntent.putExtra(Intent.EXTRA_USER, task)
+                editTaskLauncher.launch(editTaskIntent)
                 return true
             }
 
