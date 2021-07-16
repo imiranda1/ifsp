@@ -4,9 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp">
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+
+    >
 
     <TextView
+        android:paddingBottom="5dp"
         android:id="@+id/tituloTaskTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +18,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
+
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/descricaoTaskTv"
         android:layout_width="match_parent"
@@ -23,4 +30,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tituloTaskTv" />
+
+    <TextView
+        android:id="@+id/conclusaoTaskTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conclusão"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descricaoTaskTv" />
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conclusaoTaskTv" />]
+
 </androidx.constraintlayout.widget.ConstraintLayout>

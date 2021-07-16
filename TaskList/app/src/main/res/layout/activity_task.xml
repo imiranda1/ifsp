@@ -30,6 +30,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tituloEt" />
 
+    <EditText
+        android:id="@+id/dataConclusaoEt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Data Conclusão"
+        android:inputType="text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descricaoEt" />
+
 
     <Button
         android:id="@+id/salvarBt"
@@ -39,7 +50,7 @@
         android:onClick="onClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descricaoEt" />
+        app:layout_constraintTop_toBottomOf="@id/dataConclusaoEt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

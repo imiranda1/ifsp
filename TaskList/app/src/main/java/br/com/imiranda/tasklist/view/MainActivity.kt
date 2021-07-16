@@ -158,13 +158,12 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
                 }
 
             }
-            R.id.removerMi -> {
 
+            R.id.removerMi -> {
                 if(task.usuarioExecutor.equals("")){
                     Toast.makeText(this, "TASK REMOVIDA", Toast.LENGTH_SHORT).show()
                     taskList.remove(task)
                     taskAdapter.notifyDataSetChanged()
-
                     taskController.removeTask(task.titulo)
                     return true
                 }else{
@@ -172,29 +171,21 @@ class MainActivity : AppCompatActivity(),OnTaskClickListener{
                     return true
                 }
 
-
             }
+
             R.id.editarMi -> {
-                //Toast.makeText(this, "EDITANDO" +task.titulo, Toast.LENGTH_SHORT).show()
-
-
-                val editarContatoIntent = Intent(this, EditTaskActivity::class.java)
-//                editarContatoIntent.putExtra(Intent.EXTRA_USER, task)
-//                editarContatoIntent.putExtra(Intent.EXTRA_INDEX, taskAdapter.getPosicao())
-//                startActivityForResult(editarContatoIntent, -1)
-
-
-                val editTaskIntent = Intent(this, EditTaskActivity::class.java)
-                editTaskIntent.putExtra(Intent.EXTRA_USER, task)
-                editTaskLauncher.launch(editTaskIntent)
+                if(task.usuarioExecutor.equals("")) {
+                    val editTaskIntent = Intent(this, EditTaskActivity::class.java)
+                    editTaskIntent.putExtra(Intent.EXTRA_USER, task)
+                    editTaskLauncher.launch(editTaskIntent)
+                }else{
+                    Toast.makeText(this, "Task concluída não pode ser editada" +task.titulo, Toast.LENGTH_SHORT).show()
+                }
                 return true
             }
-
 
         }
         return false
     }
-
-
 
 }

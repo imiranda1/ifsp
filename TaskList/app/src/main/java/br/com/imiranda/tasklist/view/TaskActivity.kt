@@ -2,14 +2,14 @@ package br.com.imiranda.tasklist.view
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import br.com.imiranda.tasklist.AutenticacaoFirebase
 import br.com.imiranda.tasklist.databinding.ActivityTaskBinding
 import br.com.imiranda.tasklist.model.Task
-import java.time.LocalDateTime
+import java.util.*
 
 
 class TaskActivity : AppCompatActivity() {
@@ -24,10 +24,10 @@ class TaskActivity : AppCompatActivity() {
         val task: Task
         with(activityTaskBinding){
             task = Task(
-                tituloEt.text.toString(),
+                tituloEt.text.toString().uppercase(),
                 descricaoEt.text.toString(),
-                "",
-                "12-07-2021",
+                getDataAtual(),
+                dataConclusaoEt.text.toString(),
                 AutenticacaoFirebase.firebaseAuth.currentUser?.email.toString(),
                 ""
             )
@@ -46,6 +46,11 @@ class TaskActivity : AppCompatActivity() {
         if(AutenticacaoFirebase.firebaseAuth.currentUser == null){
             finish()
         }
+    }
+
+    fun getDataAtual():String {
+        val currentTime = Calendar.getInstance().time.toString()
+        return currentTime
     }
 
 }

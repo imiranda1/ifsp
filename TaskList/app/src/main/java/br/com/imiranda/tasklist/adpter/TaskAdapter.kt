@@ -1,7 +1,9 @@
 package br.com.imiranda.tasklist.adpter
 
+import android.graphics.Color
 import android.view.*
 import android.widget.TextView
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import br.com.imiranda.tasklist.R
 import br.com.imiranda.tasklist.model.Task
@@ -13,6 +15,7 @@ class TaskAdapter (private val tasksList: MutableList<Task>,
     inner class TaskViewHolder(viewTask: View): RecyclerView.ViewHolder(viewTask), View.OnCreateContextMenuListener{
         val tituloTv: TextView = viewTask.findViewById(R.id.tituloTaskTv)
         val descricaoTv: TextView = viewTask.findViewById(R.id.descricaoTaskTv)
+        val conclusaoTv: TextView = viewTask.findViewById(R.id.conclusaoTaskTv)
         init {
             viewTask.setOnCreateContextMenuListener(this)
         }
@@ -32,16 +35,20 @@ class TaskAdapter (private val tasksList: MutableList<Task>,
     //chamada atualizar os valores de uma célula ou view
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task: Task = tasksList[position]
-        holder.tituloTv.text = task.titulo
+        holder.tituloTv.text = task.titulo.uppercase()
         holder.descricaoTv.text = task.descricao
+        holder.conclusaoTv.text = task.dataPrevistaExecucao
 
+
+        if(!task.usuarioExecutor.equals("")){
+            holder.itemView.setBackgroundColor(Color.parseColor("#2ECC71"))
+
+        }else{
+            holder.itemView.setBackgroundColor(Color.parseColor("#FF5733"))
+        }
         holder.itemView.setOnClickListener{
             onTaskClickListener.onTaskClick(position)
-
         }
-
-        //on long click listener
-
         //on long click listener
         holder.itemView.setOnLongClickListener { v: View? ->
             posicao = position

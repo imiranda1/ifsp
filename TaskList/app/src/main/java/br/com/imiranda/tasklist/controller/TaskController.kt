@@ -18,4 +18,6 @@ class TaskController(mainActivity: MainActivity) {
     fun buscaTasks() = taskDao.readTasks()
     fun atualizaTask(task: Task) = taskDao.updateTask(task)
     fun removeTask(titulo: String) = taskDao.deleteTask(titulo)
+
+
 }

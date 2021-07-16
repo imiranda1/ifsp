@@ -30,7 +30,6 @@ class AutenticacaoActivity : AppCompatActivity() {
         setContentView(activityAutenticacaoBinding.root)
 
         //Instanciando objetos de signin
-
         AutenticacaoFirebase.googleSignInOptions = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -39,14 +38,15 @@ class AutenticacaoActivity : AppCompatActivity() {
 
 
         //Cliente a partir das options
-
         AutenticacaoFirebase.googleSignInClient = GoogleSignIn.getClient(this, AutenticacaoFirebase.googleSignInOptions!!)
+
         //Buscar a ultima conta google autenticada
         AutenticacaoFirebase.googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this)
 
         //se ja autenticaram com a conta google e a conta permanece
         if(AutenticacaoFirebase.googleSignInAccount != null){
             Toast.makeText(this, "Usuário autenticado com sucesso", Toast.LENGTH_SHORT).show()
+
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -80,7 +80,7 @@ class AutenticacaoActivity : AppCompatActivity() {
     fun onClick(view: View){
         when(view){
             activityAutenticacaoBinding.cadastrarBt -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, CadastrarActivity::class.java))
             }
             activityAutenticacaoBinding.entrarBt -> {
                 val email: String
@@ -96,7 +96,6 @@ class AutenticacaoActivity : AppCompatActivity() {
                         finish()
                     }.addOnFailureListener{
                         Toast.makeText(this, "Usuário/senha inválidos", Toast.LENGTH_SHORT).show()
-
                     }
 
             }

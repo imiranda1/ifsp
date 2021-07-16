@@ -39,7 +39,6 @@ class TaskFirebase(mainActivity: MainActivity):TaskDAO {
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 val taskRemovida: Task = snapshot.getValue<Task>()?:Task()
                 taskList.remove(taskRemovida)
-
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -60,14 +59,10 @@ class TaskFirebase(mainActivity: MainActivity):TaskDAO {
                         mainActivity.atualizaAdapter()
                     }
                 }
-
-
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
     }
 
